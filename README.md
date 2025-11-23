@@ -22,21 +22,44 @@ CIC-Lite has been validated at one million documents on the TREC DL 2019 passage
 
 (See CIC Benchmarks in /docs)
 
-Full Instructions are in docs/usage.md but here is a short setup guide
 
-# 1. Clone repository
-git clone https://github.com/JLNuijens/NOS-IRv3
-cd NOS-IRv3
+## Reproduction (Full Pipeline)
 
-# 2. Install dependencies
-pip install -r requirements.txt
+The complete instructions for running the CIC/NOS-IR retrieval pipeline are in:
 
-# 3. Prepare TREC DL 2019 dataset
-python data/prepare_trec_dl2019.py
+📄 **docs/usage.md**
 
-# 4. Run CIC encoding on documents
-python encoders/cic_encoder.py
+This includes:
 
-# 5. Evaluate retrieval
-python evaluation/eval_trec.py
+1. Generating the TREC DL 2019 judged subset  
+2. Building the memory store (CIC waveforms)  
+3. Running resonance retrieval  
+4. Computing MRR, nDCG, Recall metrics  
+5. (Optional) Running FAISS + CIC hybrid mode  
+6. Log + artifact output
 
+### Quickstart Example
+
+Generate dataset:
+    python -X utf8 make_trec_data.py
+
+Run evaluation (MiniLM → CIC):
+    python -m evaluation.runner \
+        --collection data/collection.tsv \
+        --queries data/queries.tsv \
+        --qrels data/qrels.txt \
+        --encoder embed \
+        --model all-MiniLM-L6-v2 \
+        --N 512 \
+        --topk 100
+
+Character-wave baseline:
+    python -m evaluation.runner \
+        --collection data/collection.tsv \
+        --queries data/queries.tsv \
+        --qrels data/qrels.txt \
+        --encoder char \
+        --N 512 \
+        --topk 100
+
+Logs are written to: logs/
