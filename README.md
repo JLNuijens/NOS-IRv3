@@ -20,4 +20,4 @@ Retrieval uses the inverse-state resonance kernel, which combines magnitude agre
 
 CIC has been validated at one million documents on the TREC DL 2019 passage benchmark, achieving MRR@10 ≈ 0.90 and nDCG@10 ≈ 0.76. It is fully deterministic, uses no ANN or indexing shortcuts, runs pure full-scan resonance, and stores 4 KB per trace.
 
-(See CIC at One Million Scale.pdf)
+(See CIC Benchmarks in /docs)
